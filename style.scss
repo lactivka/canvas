@@ -1,0 +1,161 @@
+$line-height: 55px;
+$padding-left: 25px;
+$color: rgba(0, 0, 0, 0.541327); 
+
+body {
+    
+    width: 1440px;
+    height: 900px;
+    position: absolute;
+    
+        
+        div.tools{
+            
+                display: block;
+                position: absolute;
+                width: 228px;
+                height: 246px;
+                left: 29px;
+                top: 127px;
+                border: 2px solid #e5e5e5;
+                padding: 5px;
+                font-family: Roboto;
+                font-size: 16px;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24), 0px 0px 4px rgba(0, 0, 0, 0.12);
+                
+                ul {
+                    color: $color;
+
+                    li.bucket {
+                        list-style-image: url(./data/icons/paintbucket.png); 
+                        line-height: $line-height;
+                        padding-left: $padding-left;
+                    }
+
+                    li.choose {
+                        list-style-image: url(./data/icons/choosecolor.png);
+                        line-height: $line-height;
+                        padding-left: $padding-left;    
+                    }
+
+                    li.move {
+                        list-style-image: url(./data/icons/move.png);
+                        line-height: $line-height;
+                        padding-left: $padding-left;
+                    }
+
+                    li.transform {
+                        list-style-image: url(./data/icons/transform.png);
+                        line-height: $line-height;
+                        padding-left: $padding-left;
+                    }
+
+                }  
+        }
+
+        div.colors {
+            display: block;
+            position: absolute;
+            width: 228px;
+            height: 246px;
+            left: 29px;
+            top: 465px;
+            border: 2px solid #e5e5e5;
+            padding: 5px;
+            font-family: Roboto;
+            font-size: 16px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24), 0px 0px 4px rgba(0, 0, 0, 0.12);
+            color: $color;
+
+            ul {
+                list-style-type: none;
+                li.color {
+                    padding-left: $padding-left;
+                    line-height: $line-height;
+                    
+                        span {
+                            position: absolute;
+                            width: 20px;
+                            height: 20px;
+                            left: 18px;
+                            top: 39px;
+                            background: #C4C4C4;
+                            border: 1px solid #000000;
+                            box-sizing: border-box;
+                            border-radius: 50%;
+                            line-height: $line-height;
+                        }
+                }
+
+                li.prev {
+                    padding-left: $padding-left;
+                    line-height: $line-height;
+
+                    span {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        left: 18px;
+                        top: 92px;
+                        background: #41F795;
+                        border: 1px solid #000000;
+                        box-sizing: border-box;
+                        border-radius: 50%;
+                    }
+                }
+
+                li.red {
+                    padding-left: $padding-left;
+                    line-height: $line-height;
+
+                    span {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        left: 18px;
+                        top: 147px;
+                        background: #F74141;
+                        border: 1px solid #000000;
+                        box-sizing: border-box;
+                        border-radius: 50%;
+                    }
+                }
+
+                li.blue {
+                    padding-left: $padding-left;
+                    line-height: $line-height;
+
+                    span {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        left: 18px;
+                        top: 202px;
+                        background: #41B6F7;
+                        border: 1px solid #000000;
+                        box-sizing: border-box;
+                        border-radius: 50%; 
+                    }
+                }
+               
+            }
+        }
+
+        div.size {
+            display: block;
+            position: absolute;
+            width: 150px;
+            height: 200px;
+            left: 1100px;
+            top: 127px;
+        }
+
+        canvas {
+            position: absolute;
+            width: 512px;
+            height: 512px;
+            left: 520px;
+            top: 194px;
+        }
+
+}
