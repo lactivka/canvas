@@ -131,6 +131,7 @@ body canvas {
   height: 512px;
   left: 520px;
   top: 194px;
+  image-rendering: pixelated;
 }
 
 /*# sourceMappingURL=style.css.map */

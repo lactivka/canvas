@@ -6,9 +6,9 @@
         
         <link rel="stylesheet" href="style.css?v=1.1" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> 
-         
+         <script src="index.js"></script>
     </head>
-    <body>
+    <body onload="draw();">
         <div class="tools">
             <ul>
                 <li class="bucket">Paint bucket</li>
@@ -27,12 +27,12 @@
         </div>
         <div class="size">
             <ul>
-                <li>4x4</li>
+                <li >4x4</li>
                 <li>32x32</li>
                 <li>256x256</li>
             </ul>
         </div>
-        <canvas></canvas>
+        <canvas id="canvas" width="4" height="4"></canvas>
         
         
     </body>
