@@ -1,3 +1,5 @@
+/*import { isContext } from "vm";*/
+
 const getFrames = () => {
     const frames = [];
 
@@ -7,9 +9,16 @@ const getFrames = () => {
         ["FFEB3B", "FFC107","FFC107","FFEB3B"],
         ["00BCD4", "FFEB3B","FFEB3B","00BCD4"]
     ]
+    /*fetch("./4x4.json")
+      .then (function(resp) {
+        return resp.json();
+      })
+      .then(function(data) {
+       frames.push(data);
+       return frames;
+      })*/
 
     frames.push(frame);
-      
     return frames;
 }
 
@@ -6257,11 +6266,28 @@ function draw2(frame) {
             canvas.height = 32;
         frame.forEach((row, i) => {
             row.forEach((column, j) => {
-                ctx.fillStyle = "#" + column;
+                ctx.fillStyle = 'rgba(' + column + ')';
                 ctx.fillRect(i, j, canvas.width, canvas.height);
             })
         })
     }
+}
+
+function draw3() {
+  let canvas = document.getElementById('canvas');
+
+  if (canvas.getContext) {
+    let ctx = canvas.getContext('2d');
+    let img = new Image(); 
+        canvas.width = 256;
+        canvas.height = 256;
+    
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+    }           
+        img.src = './data/canvasimage.png';
+    
+  }
 }
 
 window.onload = document.getElementById('draw').addEventListener('click', () => {
@@ -6275,4 +6301,8 @@ window.onload = document.getElementById('draw2').addEventListener('click', () =>
     const frames = getFrames2();
     const frame = frames[0];
     draw2(frame);
+})
+
+window.onload = document.getElementById('draw3').addEventListener('click', () => {
+    draw3();
 })
