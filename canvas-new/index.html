@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Codejam - Canvas API</title>
+        <meta charset="UTF-8" />   
+        <link rel="stylesheet" href="style.css?v=1.1" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">    
+    </head>
+    <body>
+        <header class = "header">
+            <img src="./asets/icons/nav icon.png" alt="Navigation">
+            <span>Codejam Canvas</span>
+            <img src="./asets/icons/menu icon.png" alt="Menu">
+        </header>
+        <section class="main-section">
+            <wrapper class="tools-wrapper">
+                <ul class="tools-bar">
+                    <li class="bucker">Fill bucket</li>
+                    <li class="choose">Choose color</li>
+                    <li class="pencil">Pencil</li>
+                    <li class="transform">Transform</li>
+                </ul>
+                <ul class="color-bar">
+                    <li class="current"><span></span>Current color</li>
+                    <li class="prev"><span></span>Prev color</li>
+                    <li class="red"><span></span>red</li>
+                    <li class="blue"><span></span>blue</li>
+                </ul>
+            </wrapper>
+            <canvas id = "canvas"></canvas>
+            <wrapper class="button-wrapper">
+                <button>[4x4]</button>
+                <button>[32x32]</button>
+                <button>Image</button>
+            </wrapper>
+        </section>
+    </body>
+    <script src="index.js"></script>
+</html>
