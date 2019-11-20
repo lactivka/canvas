@@ -13,26 +13,26 @@
             <img src="./asets/icons/menu icon.png" alt="Menu">
         </header>
         <section class="main-section">
-            <wrapper class="tools-wrapper">
-                <ul class="tools-bar">
-                    <li class="bucker">Fill bucket</li>
-                    <li class="choose">Choose color</li>
-                    <li class="pencil">Pencil</li>
-                    <li class="transform">Transform</li>
+            
+                <ul class="tools_block tool">
+                    <li class="tool__bucker">Fill bucket</li>
+                    <li class="tool__choose">Choose color</li>
+                    <li class="tool__pencil">Pencil</li>
+                    <li class="tool__transform">Transform</li>
                 </ul>
-                <ul class="color-bar">
-                    <li class="current"><span></span>Current color</li>
-                    <li class="prev"><span></span>Prev color</li>
-                    <li class="red"><span></span>red</li>
-                    <li class="blue"><span></span>blue</li>
+                <ul class="tools_block color">
+                    <li class="color__current"><span></span>Current color</li>
+                    <li class="color__prev"><span></span>Prev color</li>
+                    <li class="color__red"><span></span>red</li>
+                    <li class="color__blue"><span></span>blue</li>
                 </ul>
-            </wrapper>
+            
             <canvas id = "canvas"></canvas>
-            <wrapper class="button-wrapper">
-                <button>[4x4]</button>
-                <button>[32x32]</button>
-                <button>Image</button>
-            </wrapper>
+            
+                <button class="button" data-array="4">[4x4]</button>
+                <button class="button" data-array="32">[32x32]</button>
+                <button class="button" data-array="image">Image</button>
+            
         </section>
     </body>
     <script src="index.js"></script>
