@@ -60,6 +60,7 @@ body {
 
 .tool :hover {
     background-color: rgb(228, 227, 227);
+    opacity: 0.5;
 }
 
 .tool__bucket {
@@ -80,6 +81,19 @@ body {
 .tool__transform {
     background: url(./asets/icons/transform.png) no-repeat 43px 16px;
     padding-left: 81px;
+}
+
+.color-input {
+    position: absolute;
+    width: 223px;
+    height: 61px;
+    opacity: 0;
+    background-color: white;
+    border: none;
+}
+
+.color-input :hover {
+    background-color: rgb(228, 227, 227);
 }
 
 .tool__prev {
@@ -156,5 +170,9 @@ body {
     width: 140px;
     height: 65px;  
     margin: 2px 0px 3px 7px; 
+}
+
+.active {
+    background-color: #f39b9b;
 }
 
