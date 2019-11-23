@@ -100,48 +100,28 @@ body {
     border-bottom: 1px solid #e5e5e5;
 }
 
-.tool__current ::before {
-    display: inline-block;
+.tool span {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding-left: 21px;
+    margin-left: 38px;
+    margin-right: 21px; 
+}
+
+.tool__current span {
     background-color: green;
-    content: "";
-    margin: 0px 20px -5px 39px;
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
-    border-radius: 50%;
 }
 
-.tool__prev ::before{
-    display: inline-block;
+.tool__prev span {
     background-color: orange;
-    content: "";
-    margin: 0px 20px -5px 40px;
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
-    border-radius: 50%;
 }
 
-.tool__red ::before{
-    display: inline-block;
+.tool__red span {
     background-color: red;
-    content: "";
-    margin: 0px 20px -5px 40px;
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
-    border-radius: 50%;
 }
 
-.tool__blue ::before{
-    display: inline-block;
+.tool__blue span {
     background-color: blue;
-    content: "";
-    margin: 0px 20px -5px 39px;
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
-    border-radius: 50%;
 }
 
 #canvas {
