@@ -8,6 +8,7 @@ let height = localStorage.getItem("height");
 let currentColor = localStorage.getItem("currentColor");
 let prevColor = localStorage.getItem("prevColor");
 let canvas = document.getElementById("canvas");
+let drawing = false;
 
 // set select-color tools colors 
 document.querySelector(".tool__current").children[0].style.backgroundColor = currentColor;
@@ -80,7 +81,42 @@ class DrawingTools {
         clicked.classList.add("active");
     }
 
-    setCurrentColor(clicked) { 
+    bucketUse() { // fill canvas with current color
+        
+        if (canvas.getContext) {
+            let ctx = canvas.getContext("2d");
+            canvas.width = 4;
+            canvas.height = 4;
+            ctx.fillStyle = document.querySelector(".tool__current").children[0].style.backgroundColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    chooseUse(event) { // set current color equal pixel color clicked on canvas
+        let x = event.pageX - event.target.offsetLeft;
+        let y = event.pageY - event.target.offsetTop; 
+    
+        if (canvas.getContext) {
+            let ctx = canvas.getContext("2d");
+            let pixelData = ctx.getImageData(Math.floor(x*canvas.width/512), Math.floor(y*canvas.height/512), 1, 1).data;
+            this.changePrevTo();
+            this.changeCurrentFromChooseColor(pixelData);  
+        }   
+    }
+
+    pencilUse(event) { // draw on canvas with pencil tool
+        
+        let x = event.pageX - event.target.offsetLeft;
+        let y = event.pageY - event.target.offsetTop; 
+                 
+        if (canvas.getContext) {
+            let ctx = canvas.getContext("2d");
+            ctx.fillStyle = document.querySelector(".tool__current").children[0].style.backgroundColor;
+            ctx.fillRect(Math.floor(x*canvas.width/512), Math.floor(y*canvas.height/512), 1, 1); 
+        }   
+    }
+
+    setCurrentColor(clicked) { // color changing
         let prevColor = document.querySelector(".tool__prev").children[0].style.backgroundColor;
         
         this.clicked = clicked;
@@ -120,6 +156,10 @@ class DrawingTools {
 
            document.querySelector(".color-input").value = "#eeebeb";
     }
+
+    changeCurrentFromChooseColor(pixelData) {
+        document.querySelector(".tool__current").children[0].style.backgroundColor = ('rgba(' + pixelData + ')');
+    }
 }
 
 let draw = new DrawByButton();
@@ -130,6 +170,26 @@ window.onload = document.querySelector(".draw").addEventListener("click", draw);
 window.onload = document.querySelector(".tools-for-draw").addEventListener("click", (event) => {
     tool.activate(event.target);
 } );
+
+window.onload = document.getElementById("canvas").addEventListener("mousedown", (event) => {
+    drawing = true;
+    let functionName = (document.querySelector(".active").classList[0]).slice(6) + "Use";
+    tool[functionName](event);
+})
+
+window.onload = document.getElementById("canvas").addEventListener("mousemove", (event) => {
+    if (drawing) {
+        tool.pencilUse(event);
+    }
+})  
+ 
+window.onload = document.getElementById("canvas").addEventListener("mouseup", () => {
+    drawing = false;
+})
+
+window.onload = document.getElementById("canvas").addEventListener("mouseleave", () => {
+    drawing = false;
+})
 
 window.onload = document.querySelector(".color-input").onchange =  () => {
     tool.changeCurrentFromInput();
