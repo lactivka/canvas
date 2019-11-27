@@ -8,7 +8,9 @@ let height = localStorage.getItem("height");
 let currentColor = localStorage.getItem("currentColor");
 let prevColor = localStorage.getItem("prevColor");
 let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
 let drawing = false;
+let img = new Image;
 
 // set select-color tools colors 
 document.querySelector(".tool__current").children[0].style.backgroundColor = currentColor;
@@ -18,11 +20,10 @@ document.querySelector(".tool__blue").children[0].style.backgroundColor = "#0000
 
 // image canvas from local storage
 if (canvas.getContext) {
-    let ctx = canvas.getContext("2d");
-
+    
     canvas.width = width;
     canvas.height = height;
-    let img = new Image;
+    
     img.src = dataURL;
     img.onload = function() {
       ctx.drawImage(img, 0, 0);
@@ -31,77 +32,62 @@ if (canvas.getContext) {
 
 // draw arrays of image on canvas
 class DrawByButton {
+
     handleEvent (event) {
         switch (event.target.dataset.array) {
-            case "4": // 4x4 array
-                if (canvas.getContext) {
-                    let ctx = canvas.getContext("2d");
-                    canvas.width = 4;
-                    canvas.height = 4;
-                    data4x4.forEach((row, i) => {
-                        row.forEach((column, j) => {
-                            ctx.fillStyle = "#" + column;
-                            ctx.fillRect(i, j, canvas.width, canvas.height);
-                        })
+            case "4": // 4x4 array 
+                canvas.width = 4;
+                canvas.height = 4;
+                data4x4.forEach((row, i) => {
+                    row.forEach((column, j) => {
+                        ctx.fillStyle = "#" + column;
+                        ctx.fillRect(i, j, canvas.width, canvas.height);
                     })
-                }
+                })   
                 break;
             case "32": // 32x32 array
-                if (canvas.getContext) {
-                    let ctx = canvas.getContext("2d");
-                    canvas.width = 32;
-                    canvas.height = 32;
-                    data32x32.forEach((row, i) => {
-                        row.forEach((column, j) => {
-                            ctx.fillStyle = "rgba(" + column + ")";
-                            ctx.fillRect(i, j, canvas.width, canvas.height);
-                        })
+                canvas.width = 32;
+                canvas.height = 32;
+                data32x32.forEach((row, i) => {
+                    row.forEach((column, j) => {
+                        ctx.fillStyle = "rgba(" + column + ")";
+                        ctx.fillRect(i, j, canvas.width, canvas.height);
                     })
-                }
-                break;
+                })
+            break;
             case "image": // image
-                if (canvas.getContext) {
-                    let ctx = canvas.getContext("2d");
-                    let img = new Image(); 
-                    canvas.width = 256;
-                    canvas.height = 256; 
-                    img.onload = function() {
-                        ctx.drawImage(img, 0, 0);
-                    }           
-                    img.src = "./asets/canvasimage.png";
-                }
-                break;
+                canvas.width = 256;
+                canvas.height = 256; 
+                img.src = "./asets/canvasimage.png";
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0);
+                }           
+            break;
         }
     }
 }
 
 class DrawingTools {
+
     activate(clicked) { // set active status for selected tool
         document.querySelector(".active").classList.remove("active");
         clicked.classList.add("active");
     }
 
     bucketUse() { // fill canvas with current color
-        
-        if (canvas.getContext) {
-            let ctx = canvas.getContext("2d");
-            canvas.width = 4;
-            canvas.height = 4;
-            ctx.fillStyle = document.querySelector(".tool__current").children[0].style.backgroundColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
+            
+        ctx.fillStyle = document.querySelector(".tool__current").children[0].style.backgroundColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     chooseUse(event) { // set current color equal pixel color clicked on canvas
+        
         let x = event.pageX - event.target.offsetLeft;
         let y = event.pageY - event.target.offsetTop; 
-    
-        if (canvas.getContext) {
-            let ctx = canvas.getContext("2d");
-            let pixelData = ctx.getImageData(Math.floor(x*canvas.width/512), Math.floor(y*canvas.height/512), 1, 1).data;
-            this.changePrevTo();
-            this.changeCurrentFromChooseColor(pixelData);  
-        }   
+
+        let pixelData = ctx.getImageData(Math.floor(x*canvas.width/512), Math.floor(y*canvas.height/512), 1, 1).data;
+        this.changePrevTo();
+        this.changeCurrentFromChooseColor(pixelData);       
     }
 
     pencilUse(event) { // draw on canvas with pencil tool
@@ -109,14 +95,12 @@ class DrawingTools {
         let x = event.pageX - event.target.offsetLeft;
         let y = event.pageY - event.target.offsetTop; 
                  
-        if (canvas.getContext) {
-            let ctx = canvas.getContext("2d");
-            ctx.fillStyle = document.querySelector(".tool__current").children[0].style.backgroundColor;
-            ctx.fillRect(Math.floor(x*canvas.width/512), Math.floor(y*canvas.height/512), 1, 1); 
-        }   
+        ctx.fillStyle = document.querySelector(".tool__current").children[0].style.backgroundColor;
+        ctx.fillRect(Math.floor(x*canvas.width/512), Math.floor(y*canvas.height/512), 1, 1);  
     }
 
     setCurrentColor(clicked) { // color changing
+        
         let prevColor = document.querySelector(".tool__prev").children[0].style.backgroundColor;
         
         this.clicked = clicked;
@@ -132,7 +116,7 @@ class DrawingTools {
 
     changeCurrentTo(clicked, prevColor) { // change current tool color:
 
-       if (clicked.closest(".tool__prev")) {  // to prev tool color
+        if (clicked.closest(".tool__prev")) {  // to prev tool color
             document.querySelector(".tool__current").children[0].style.backgroundColor = 
             prevColor;
         }
