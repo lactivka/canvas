@@ -1,5 +1,8 @@
 import {data4x4} from "./data4x4.js";
 import {data32x32} from "./data32x32.js";
+import {Canvas} from "./canvas.js";
+
+let canvas = new Canvas(document.getElementById("canvas"));
 
 // get data from local storage
 let dataURL = localStorage.getItem("canvasImage");
@@ -7,10 +10,8 @@ let width = localStorage.getItem("width");
 let height = localStorage.getItem("height");
 let currentColor = localStorage.getItem("currentColor");
 let prevColor = localStorage.getItem("prevColor");
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
 let drawing = false;
-let img = new Image;
+const src = "./asets/canvasimage.png";
 
 // set select-color tools colors 
 document.querySelector(".tool__current").children[0].style.backgroundColor = currentColor;
@@ -30,41 +31,10 @@ if (canvas.getContext) {
     }
 }
 
-// draw arrays of image on canvas
-class DrawByButton {
-
-    handleEvent (event) {
-        switch (event.target.dataset.array) {
-            case "4": // 4x4 array 
-                canvas.width = 4;
-                canvas.height = 4;
-                data4x4.forEach((row, i) => {
-                    row.forEach((column, j) => {
-                        ctx.fillStyle = "#" + column;
-                        ctx.fillRect(i, j, canvas.width, canvas.height);
-                    })
-                })   
-                break;
-            case "32": // 32x32 array
-                canvas.width = 32;
-                canvas.height = 32;
-                data32x32.forEach((row, i) => {
-                    row.forEach((column, j) => {
-                        ctx.fillStyle = "rgba(" + column + ")";
-                        ctx.fillRect(i, j, canvas.width, canvas.height);
-                    })
-                })
-            break;
-            case "image": // image
-                canvas.width = 256;
-                canvas.height = 256; 
-                img.src = "./asets/canvasimage.png";
-                img.onload = function() {
-                    ctx.drawImage(img, 0, 0);
-                }           
-            break;
-        }
-    }
+function defineArray (data) {
+    if (data.localeCompare("4") === 0) return data4x4;
+    if (data.localeCompare("32") === 0) return data32x32;
+    return false;
 }
 
 class DrawingTools {
@@ -146,10 +116,17 @@ class DrawingTools {
     }
 }
 
-let draw = new DrawByButton();
 let tool = new DrawingTools();
 
-window.onload = document.querySelector(".draw").addEventListener("click", draw);
+window.onload = document.querySelector(".draw").addEventListener("click", (event) => {
+    const data = event.target.dataset.array;
+    
+    if (data.localeCompare("image") === 0) canvas.drawPicture(src);
+    else {
+        const array = defineArray(data);
+        canvas.drawArray(data, array); 
+    }
+});
 
 window.onload = document.querySelector(".tools-for-draw").addEventListener("click", (event) => {
     tool.activate(event.target);
