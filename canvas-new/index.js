@@ -1,35 +1,21 @@
 import {data4x4} from "./data4x4.js";
 import {data32x32} from "./data32x32.js";
 import {Canvas} from "./canvas.js";
+import {init} from "./init.js";
 
-let canvas = new Canvas(document.getElementById("canvas"));
-
-// get data from local storage
-let dataURL = localStorage.getItem("canvasImage");
-let width = localStorage.getItem("width");
-let height = localStorage.getItem("height");
-let currentColor = localStorage.getItem("currentColor");
-let prevColor = localStorage.getItem("prevColor");
-let drawing = false;
+export let canvas = new Canvas(document.getElementById("canvas"));
 const src = "./asets/canvasimage.png";
+init();
+
+/*let currentColor = localStorage.getItem("currentColor");
+let prevColor = localStorage.getItem("prevColor");*/
+let drawing = false;
 
 // set select-color tools colors 
-document.querySelector(".tool__current").children[0].style.backgroundColor = currentColor;
+/*document.querySelector(".tool__current").children[0].style.backgroundColor = currentColor;
 document.querySelector(".tool__prev").children[0].style.backgroundColor = prevColor;
 document.querySelector(".tool__red").children[0].style.backgroundColor = "#ff0000";
-document.querySelector(".tool__blue").children[0].style.backgroundColor = "#0000ff";
-
-// image canvas from local storage
-if (canvas.getContext) {
-    
-    canvas.width = width;
-    canvas.height = height;
-    
-    img.src = dataURL;
-    img.onload = function() {
-      ctx.drawImage(img, 0, 0);
-    }
-}
+document.querySelector(".tool__blue").children[0].style.backgroundColor = "#0000ff";*/
 
 function defineArray (data) {
     if (data.localeCompare("4") === 0) return data4x4;
@@ -121,7 +107,7 @@ let tool = new DrawingTools();
 window.onload = document.querySelector(".draw").addEventListener("click", (event) => {
     const data = event.target.dataset.array;
     
-    if (data.localeCompare("image") === 0) canvas.drawPicture(src);
+    if (data.localeCompare("image") === 0) canvas.drawPicture(src, 256, 256);
     else {
         const array = defineArray(data);
         canvas.drawArray(data, array); 
@@ -176,9 +162,7 @@ window.onload = document.addEventListener("keydown", (event) => {
 })
 // save current condition to local storage
 window.onbeforeunload = () => {
-    localStorage.setItem("canvasImage", canvas.toDataURL());
-    localStorage.setItem("width", canvas.width);
-    localStorage.setItem("height", canvas.height);
+    canvas.saveCanvas();
     localStorage.setItem("currentColor", document.querySelector(".tool__current").children[0].style.backgroundColor);
     localStorage.setItem("prevColor",  document.querySelector(".tool__prev").children[0].style.backgroundColor);
 }

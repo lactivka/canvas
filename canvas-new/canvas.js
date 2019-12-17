@@ -5,10 +5,10 @@ export class Canvas {
         this.ctx = canvas.getContext("2d");
     }
 
-    drawPicture(source) {
+    drawPicture(source, width, height) {
         const img = new Image;
-        this.canvas.width = 256;
-        this.canvas.height = 256; 
+        this.canvas.width = width;
+        this.canvas.height = height; 
         img.crossOrigin = 'anonymous';
         img.src = source;
         img.onload = function() {
@@ -42,5 +42,11 @@ export class Canvas {
     defineFormat(arr) {
         if ((typeof arr[0][0]).localeCompare("string") === 0) return true;
         return false;
+    }
+
+    saveCanvas() {
+        localStorage.setItem("canvasImage", this.canvas.toDataURL());
+        localStorage.setItem("width", this.canvas.width);
+        localStorage.setItem("height", this.canvas.height);
     }
 }
