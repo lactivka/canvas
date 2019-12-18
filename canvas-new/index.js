@@ -1,21 +1,14 @@
 import {data4x4} from "./data4x4.js";
 import {data32x32} from "./data32x32.js";
 import {Canvas} from "./canvas.js";
-import {init} from "./init.js";
+import {init, color} from "./init.js";
 
 export let canvas = new Canvas(document.getElementById("canvas"));
-const src = "./asets/canvasimage.png";
 init();
 
-/*let currentColor = localStorage.getItem("currentColor");
-let prevColor = localStorage.getItem("prevColor");*/
-let drawing = false;
+const src = "./asets/canvasimage.png";
 
-// set select-color tools colors 
-/*document.querySelector(".tool__current").children[0].style.backgroundColor = currentColor;
-document.querySelector(".tool__prev").children[0].style.backgroundColor = prevColor;
-document.querySelector(".tool__red").children[0].style.backgroundColor = "#ff0000";
-document.querySelector(".tool__blue").children[0].style.backgroundColor = "#0000ff";*/
+let drawing = false;
 
 function defineArray (data) {
     if (data.localeCompare("4") === 0) return data4x4;
@@ -54,52 +47,6 @@ class DrawingTools {
         ctx.fillStyle = document.querySelector(".tool__current").children[0].style.backgroundColor;
         ctx.fillRect(Math.floor(x*canvas.width/512), Math.floor(y*canvas.height/512), 1, 1);  
     }
-
-    setCurrentColor(clicked) { // color changing
-        
-        let prevColor = document.querySelector(".tool__prev").children[0].style.backgroundColor;
-        
-        this.clicked = clicked;
-        this.changePrevTo();
-        this.changeCurrentTo(clicked, prevColor);
-    }
-
-    changePrevTo() { // change color of prev tool to current tool color
-        
-        document.querySelector(".tool__prev").children[0].style.backgroundColor = 
-        document.querySelector(".tool__current").children[0].style.backgroundColor;
-    }
-
-    changeCurrentTo(clicked, prevColor) { // change current tool color:
-
-        if (clicked.closest(".tool__prev")) {  // to prev tool color
-            document.querySelector(".tool__current").children[0].style.backgroundColor = 
-            prevColor;
-        }
-
-        if (clicked.closest(".tool__red")) { // to red
-            document.querySelector(".tool__current").children[0].style.backgroundColor = 
-            document.querySelector(".tool__red").children[0].style.backgroundColor;   
-        }
-          
-        if (clicked.closest(".tool__blue")) { // to blue
-           document.querySelector(".tool__current").children[0].style.backgroundColor = 
-           document.querySelector(".tool__blue").children[0].style.backgroundColor;   
-        } 
-         
-    }
-
-    changeCurrentFromInput() { // change current color to color selected in input
-        
-           document.querySelector(".tool__current").children[0].style.backgroundColor = 
-           document.querySelector(".color-input").value;
-
-           document.querySelector(".color-input").value = "#eeebeb";
-    }
-
-    changeCurrentFromChooseColor(pixelData) {
-        document.querySelector(".tool__current").children[0].style.backgroundColor = ('rgba(' + pixelData + ')');
-    }
 }
 
 let tool = new DrawingTools();
@@ -110,7 +57,7 @@ window.onload = document.querySelector(".draw").addEventListener("click", (event
     if (data.localeCompare("image") === 0) canvas.drawPicture(src, 256, 256);
     else {
         const array = defineArray(data);
-        canvas.drawArray(data, array); 
+        canvas.drawPixel(data, array); 
     }
 });
 
@@ -139,11 +86,11 @@ window.onload = document.getElementById("canvas").addEventListener("mouseleave",
 })
 
 window.onload = document.querySelector(".color-input").onchange =  () => {
-    tool.changeCurrentFromInput();
+    color.changeCurrentFromInput();
 }
 
 window.onload = document.querySelector(".select-color").addEventListener("click", (event) => {
-    tool.setCurrentColor(event.target);     
+   color.changeColor(event.target);     
 });
 // select tool for draw by pressing keyboard key 
 window.onload = document.addEventListener("keydown", (event) => {
@@ -163,6 +110,5 @@ window.onload = document.addEventListener("keydown", (event) => {
 // save current condition to local storage
 window.onbeforeunload = () => {
     canvas.saveCanvas();
-    localStorage.setItem("currentColor", document.querySelector(".tool__current").children[0].style.backgroundColor);
-    localStorage.setItem("prevColor",  document.querySelector(".tool__prev").children[0].style.backgroundColor);
+    color.saveColor();
 }

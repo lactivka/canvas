@@ -1,6 +1,6 @@
 export class Canvas {
 
-    constructor (canvaselement) {
+    constructor(canvaselement) {
         this.canvas = canvaselement;
         this.ctx = canvas.getContext("2d");
     }
@@ -11,13 +11,12 @@ export class Canvas {
         this.canvas.height = height; 
         img.crossOrigin = 'anonymous';
         img.src = source;
-        img.onload = function() {
-            this.ctx = canvas.getContext("2d");
+        img.onload = () => {
             this.ctx.drawImage(img, 0, 0);
         }
     }
 
-    drawArray(data, array) {
+    drawPixel(data, array) {
         this.canvas.width = data;
         this.canvas.height = data;
         let stringFormat = this.defineFormat(array);
