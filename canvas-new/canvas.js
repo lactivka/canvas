@@ -1,8 +1,18 @@
+import {color} from "./init.js";
+
 export class Canvas {
 
     constructor(canvaselement) {
         this.canvas = canvaselement;
         this.ctx = canvas.getContext("2d");
+    }
+
+    getWidth() {
+        return this.canvas.width;
+    }
+    
+    getHeight() {
+        return this.canvas.height;
     }
 
     drawPicture(source, width, height) {
@@ -41,6 +51,25 @@ export class Canvas {
     defineFormat(arr) {
         if ((typeof arr[0][0]).localeCompare("string") === 0) return true;
         return false;
+    }
+
+    bucketUse() { // fill canvas with current color
+            
+        this.ctx.fillStyle = color.currentColor;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    chooseUse(coordinates) { // set current color equal pixel color clicked on canvas
+
+        let pixelData = this.ctx.getImageData(coordinates[0], coordinates[1], 1, 1).data;
+        color.changePrevTo(color.currentColor);
+        color.changeCurrentFromChooseColor(pixelData);       
+    }
+
+    pencilUse(coordinates) { // draw on canvas with pencil tool
+        
+        this.ctx.fillStyle = color.currentColor;
+        this.ctx.fillRect(coordinates[0], coordinates[1], 1, 1);  
     }
 
     saveCanvas() {
