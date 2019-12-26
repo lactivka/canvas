@@ -53,23 +53,40 @@ export class Canvas {
         return false;
     }
 
-    bucketUse() { // fill canvas with current color
+    bucketFill(color) { // fill canvas with current color
             
-        this.ctx.fillStyle = color.currentColor;
+        this.ctx.fillStyle = color;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    chooseUse(coordinates) { // set current color equal pixel color clicked on canvas
+    pixelColor(current, coordinates) { // set current color equal pixel color clicked on canvas
 
         let pixelData = this.ctx.getImageData(coordinates[0], coordinates[1], 1, 1).data;
-        color.changePrevTo(color.currentColor);
+        color.changePrevTo(current);
         color.changeCurrentFromChooseColor(pixelData);       
     }
 
-    pencilUse(coordinates) { // draw on canvas with pencil tool
+    drawRectangle(color, oldCoord, coord) { // draw on canvas with pencil tool
+        this.ctx.fillStyle = color;
+    
+        if (coord === undefined) { this.ctx.fillRect(oldCoord[0], oldCoord[1], 1, 1); }
+        else {
+            let dx = Math.abs(coord[0] - oldCoord[0]);
+            let dy = Math.abs(coord[1] - oldCoord[1]);
+            let sx = (oldCoord[0] < coord[0]) ? 1 : -1;
+            let sy = (oldCoord[1] < coord[1]) ? 1 : -1;
+            let err = dx - dy;
+
+            while(true) {
+                this.ctx.fillRect(oldCoord[0], oldCoord[1], 1, 1);
+
+                if ((oldCoord[0] === coord[0]) && (oldCoord[1] === coord[1])) break;
+                let nextErr = 2 * err;
+                if (nextErr > -dy) { err -= dy; oldCoord[0] += sx; }
+                if (nextErr < dx) { err += dx; oldCoord[1] += sy;}
+            }
+        }
         
-        this.ctx.fillStyle = color.currentColor;
-        this.ctx.fillRect(coordinates[0], coordinates[1], 1, 1);  
     }
 
     saveCanvas() {
