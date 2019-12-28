@@ -4,23 +4,25 @@ import {Canvas} from "./canvas.js";
 import {init, color} from "./init.js";
 import {Tools} from "./tools.js";
 
-let canvasElement = document.getElementById("canvas");
-let buttons = document.querySelector(".draw");
-let drawTools = document.querySelector(".tools-for-draw");
-let colorTools = document.querySelector(".select-color");
-let colorInput = document.querySelector(".color-input");
-export let canvas = new Canvas(canvasElement);
-let tool = new Tools(document.querySelector(".tool__pencil"));
+const canvasElement = document.getElementById("canvas");
+const buttons = document.querySelector(".draw");
+const drawTools = document.querySelector(".tools-for-draw");
+const colorTools = document.querySelector(".select-color");
+const colorInput = document.querySelector(".color-input");
+export const currentColorElement = document.querySelector(".tool__current");
+export const prevColorElement = document.querySelector(".tool__prev");
+export const canvas = new Canvas(canvasElement);
+const tool = new Tools(document.querySelector(".tool__pencil"));
 let drawing = false;
 const src = "./asets/canvasimage.png";
 let oldCoordinates = [];
 let coordinates = [];
 
-init();
+window.onload = init();
 
 function defineArray (data) {
-    if (data.localeCompare("4") === 0) return data4x4;
-    if (data.localeCompare("32") === 0) return data32x32;
+    if (data === "4") return data4x4;
+    if (data === "32") return data32x32;
     return false;
 }
 
@@ -36,26 +38,35 @@ function calcCoordinates(event) {
 }
 
 function defineFunctionName(activeTool) {
-    if (activeTool.localeCompare("bucket") === 0) { return "bucketFill"; }
-    if (activeTool.localeCompare("choose") === 0) { return "pixelColor"; }
-    if (activeTool.localeCompare("pencil") === 0) { return "drawRectangle"; }
+    if (activeTool === "bucket") { 
+        return "bucketFill"; 
+    }
+    if (activeTool === "choose") {
+        return "getPixelColor"; 
+    }
+    if (activeTool === "pencil") { 
+        return "drawRectangle"; 
+    }
 }
 
-window.onload = buttons.addEventListener("click", (event) => {
+buttons.addEventListener("click", (event) => {
     const data = event.target.dataset.array;
     
-    if (data.localeCompare("image") === 0) canvas.drawPicture(src, 256, 256);
-    else {
-        const array = defineArray(data);
-        canvas.drawPixel(data, array); 
+    if (data === "image") {
+        canvas.drawPicture(src, 256, 256);
+        return;
     }
+    
+    const array = defineArray(data);
+    canvas.drawPixel(data, array); 
+    
 });
 
-window.onload = drawTools.addEventListener("click", (event) => {
+drawTools.addEventListener("click", (event) => {
     tool.activate(event.target);
 } );
 
-window.onload = canvasElement.addEventListener("mousedown", (event) => {
+canvasElement.addEventListener("mousedown", (event) => {
     drawing = true;
     coordinates = calcCoordinates(event);
     let functionName = defineFunctionName((document.querySelector(".active").classList[0]).slice(6));
@@ -63,7 +74,7 @@ window.onload = canvasElement.addEventListener("mousedown", (event) => {
     canvas[functionName](color.currentColor, coordinates);
 })
 
-window.onload = canvasElement.addEventListener("mousemove", (event) => {
+canvasElement.addEventListener("mousemove", (event) => {
     if (drawing) {
         oldCoordinates = coordinates;
         coordinates = calcCoordinates(event);
@@ -71,23 +82,24 @@ window.onload = canvasElement.addEventListener("mousemove", (event) => {
     }
 })  
  
-window.onload = canvasElement.addEventListener("mouseup", () => {
+canvasElement.addEventListener("mouseup", () => {
     drawing = false;
 })
 
-window.onload = canvasElement.addEventListener("mouseleave", () => {
+canvasElement.addEventListener("mouseleave", () => {
     drawing = false;
 })
 
-window.onload = colorInput.onchange =  () => {
-    color.changeCurrentFromInput();
+colorInput.onchange =  () => {
+    let selectedColor = colorInput.value;
+    color.changeCurrentFromInput(selectedColor, currentColorElement, colorInput);
 }
 
-window.onload = colorTools.addEventListener("click", (event) => {
-   color.changeColor(event.target);     
+colorTools.addEventListener("click", (event) => {
+   color.changeColor(event.target, currentColorElement, prevColorElement);     
 });
 // select tool for draw by pressing keyboard key 
-window.onload = document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", (event) => {
 
     switch(event.code) {
         case "KeyB": // select fill bucket
@@ -103,6 +115,9 @@ window.onload = document.addEventListener("keydown", (event) => {
 })
 // save current condition to local storage
 window.onbeforeunload = () => {
-    canvas.saveCanvas();
-    color.saveColor();
+    localStorage.setItem("canvasImage", canvasElement.toDataURL());
+    localStorage.setItem("width", canvasElement.width);
+    localStorage.setItem("height", canvasElement.height);
+    localStorage.setItem("currentColor", color.currentColor);
+    localStorage.setItem("prevColor",  color.prevColor);
 }

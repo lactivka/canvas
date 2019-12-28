@@ -1,12 +1,12 @@
 export class Tools {
 
-    constructor(activeTool) {
-        this.activeTool = activeTool;
+    constructor(selectedTool) {
+        this.selectedTool = selectedTool;
     }
 
     activate(clicked) { // set active status for selected tool
-        this.activeTool.classList.remove("active");
-        this.activeTool = clicked;
-        this.activeTool.classList.add("active");
+        this.selectedTool.classList.remove("active");
+        this.selectedTool = clicked;
+        this.selectedTool.classList.add("active");
     }
 }

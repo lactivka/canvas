@@ -7,53 +7,47 @@ export class Color {
         this.blue = blue;
     }
 
-    changeColor(clicked) {
+    changeColor(clicked, currentColorElement, prevColorElement) {
         let previous = this.prevColor;
 
-        this.changePrevTo(this.currentColor);
-        this.changeCurrentTo(clicked, previous);
+        this.changePrevTo(this.currentColor, prevColorElement);
+        this.changeCurrentTo(clicked, previous, currentColorElement);
     }
 
-    changePrevTo(current) { // change color of prev tool to current tool color
+    changePrevTo(color, element) { // change color of prev tool to current tool color
         
-        document.querySelector(".tool__prev").children[0].style.backgroundColor = current;
-        this.prevColor = current;
+        element.children[0].style.backgroundColor = color;
+        this.prevColor = color;
     }
 
-    changeCurrentTo(clicked, color) { // change current tool color:
+    changeCurrentTo(clicked, color, element) { // change current tool color:
 
         if (clicked.closest(".tool__prev")) {  // to prev tool color
-            document.querySelector(".tool__current").children[0].style.backgroundColor = color;
+            element.children[0].style.backgroundColor = color;
             this.currentColor = color;
         }
 
         if (clicked.closest(".tool__red")) { // to red
-            document.querySelector(".tool__current").children[0].style.backgroundColor = this.red;
+            element.children[0].style.backgroundColor = this.red;
             this.currentColor = this.red;   
         }
           
         if (clicked.closest(".tool__blue")) { // to blue
-           document.querySelector(".tool__current").children[0].style.backgroundColor = this.blue;
+           element.children[0].style.backgroundColor = this.blue;
            this.currentColor = this.blue;   
         }     
     }
 
-    changeCurrentFromInput() { // change current color to color selected in input
-        let inputColor = document.querySelector(".color-input").value;
+    changeCurrentFromInput(color, currentColorElement, inputElement) { // change current color to color selected in input
         
-        document.querySelector(".tool__current").children[0].style.backgroundColor = inputColor;
-        document.querySelector(".color-input").value = "#eeebeb";
-        this.currentColor = inputColor;
+        currentColorElement.children[0].style.backgroundColor = color;
+        inputElement.value = "#eeebeb";
+        this.currentColor = color;
     }
 
-    changeCurrentFromChooseColor(pixelData) {
+    changeCurrentFromChooseColor(pixelData, element) {
         let data = ('rgba(' + pixelData + ')');
-        document.querySelector(".tool__current").children[0].style.backgroundColor = data;
+        element.children[0].style.backgroundColor = data;
         this.currentColor = data;
-    }
-    
-    saveColor() {
-        localStorage.setItem("currentColor", this.currentColor);
-        localStorage.setItem("prevColor",  this.prevColor);
     }
 }
