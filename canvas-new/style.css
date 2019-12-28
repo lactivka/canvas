@@ -1,0 +1,158 @@
+body {
+    margin: 0px;
+}
+
+.header {
+    display: flex;
+    width: 1440px;
+    height: 50px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    justify-content: space-between;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.header :first-child {
+    width: 50px;
+}
+
+.header :nth-child(2) {
+    width: 1230px;
+}
+
+.header :last-child {
+    width: 13px;
+    height: 27px;
+    align-self: center;
+    margin-right: 20px;
+}
+
+.main-section {
+    display: flex;
+    padding-top: 30px;
+    justify-content: space-between;
+    width: 1440px;
+}
+
+.tools-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 266px;
+}
+
+.tool {
+    height: 240px;    
+    border: 2px solid #e5e5e5;
+    font-family: Roboto;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.541327);    
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24), 0px 0px 4px rgba(0, 0, 0, 0.12);
+    display: block;
+    margin: 40px 0px 0px 40px;   
+    line-height: 58px;
+    list-style: none;
+    padding: 0px;
+}
+
+.tool :hover {
+    background-color: rgb(228, 227, 227);
+    opacity: 0.5;
+}
+
+.tool__bucket {
+    background: url(./asets/icons/paintbucket.png) no-repeat 43px 16px;
+    padding-left: 81px;
+}
+
+.tool__choose {
+    background: url(./asets/icons/choosecolor.png) no-repeat 43px 16px;
+    padding-left: 81px;
+}
+
+.tool__pencil {
+    background: url(./asets/icons/pensil.png) no-repeat 43px 16px;
+    padding-left: 81px;
+}
+
+.tool__transform {
+    background: url(./asets/icons/transform.png) no-repeat 43px 16px;
+    padding-left: 81px;
+}
+
+.color-input {
+    position: absolute;
+    width: 223px;
+    height: 61px;
+    opacity: 0;
+    background-color: white;
+    border: none;
+}
+
+.color-input :hover {
+    background-color: rgb(228, 227, 227);
+}
+
+.tool__prev {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.tool span {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding-left: 21px;
+    margin-left: 38px;
+    margin-right: 21px; 
+}
+
+.tool__current span {
+    background-color: green;
+}
+
+.tool__prev span {
+    background-color: orange;
+}
+
+.tool__red span {
+    background-color: red;
+}
+
+.tool__blue span {
+    background-color: blue;
+}
+
+#canvas {
+    width: 512px;
+    height: 512px;
+    image-rendering: pixelated;
+    background-color: gray;
+    border: 1px solid gray;
+    align-self: flex-end;
+}
+
+.draw {
+    display: flex;
+    flex-direction: column;
+    width: 154px;
+    height: 210px;    
+    border: 2px solid #e5e5e5;    
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24), 0px 0px 4px rgba(0, 0, 0, 0.12);
+    margin: 41px 113px 0px 0px;
+}
+
+.draw__button {
+    font-family: Roboto;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.541327);
+    width: 140px;
+    height: 65px;  
+    margin: 2px 0px 3px 7px; 
+}
+
+.active {
+    background-color: #f39b9b;
+}
+
